@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Labs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Add custom CSS here */
+        .navbar-nav .nav-link {
+            color: #808080; /* Grey color */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #808080; /* Grey color on hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand text-blue" href="/">
+                <img src="https://th.bing.com/th/id/OIP.n9Q72ykDKnaJRVinS6VYhwHaHZ?rs=1&pid=ImgDetMain" alt="Logo" class="mr-2" height="80" style="display: inline-block; vertical-align: middle;">
+                <span style="display: inline-block; vertical-align: middle;">View Labs</span>
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            &copy; 2024 View Labs
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</body>
+</html>

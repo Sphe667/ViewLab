@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Available Labs</h2>
+    <form action="{{ url_for('search') }}" method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="Search labs">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        {% for lab in labs %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://www.yorku.ca/uit/wp-content/uploads/sites/300/2020/04/Lap-Pic2.jpg" class="card-img-top" alt="{{ lab.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: blue;">{{ lab.name }}</h5>
+                        <p class="card-text">Click to see available computers</p>
+                        <a href="{{ url_for('lab_details', lab_id=lab.id) }}" class="btn btn-primary">View Computers</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="mt-4">
+        <h2>Your Booking Status</h2>
+        {% if user_bookings %}
+            <ul>
+                {% for booking in user_bookings %}
+                    <li style="color: white;">You have booked Computer {{ booking.computer_id }} in Lab {{ booking.lab_id }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="color: white;">You have no active bookings.</p>
+        {% endif %}
+        <p>View your <a href="{{ url_for('profile') }}" style="color: white;">profile</a>.</p>
+        <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </div>
+{% endblock %}

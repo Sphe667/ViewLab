@@ -1,0 +1,13 @@
+<!-- templates/profile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Welcome, {{ student.username }}!</h2>
+    <p>Your Profile Information:</p>
+    <ul>
+        <li>Username: {{ student.username }}</li>
+        <li>Email: {{ student.email }}</li>
+    </ul>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">View Labs</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+{% endblock %}

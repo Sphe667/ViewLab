@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ lab.name }}</h2>
+    <div class="row">
+        {% for computer in available_computers %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://th.bing.com/th/id/OIP.ikEDpedRHNEI9pLWoZKiRAHaHa?w=512&h=512&rs=1&pid=ImgDetMain" class="card-img-top" alt="Computer Image">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: blue;"> PC{{ computer.id }}</h5>
+                        <p class="card-text">Status: {% if computer.is_booked %}Booked{% else %}Available{% endif %}</p>
+                        {% if not computer.is_booked %}
+                            <form method="post" action="{{ url_for('book_computer', computer_id=computer.id) }}">
+                                <button type="submit" class="btn btn-primary">Book</button>
+                            </form>
+                        {% else %}
+                            {% if user_bookings %}
+                                {% for booking in user_bookings %}
+                                    {% if booking.computer_id == computer.id and not booking.is_cancelled %}
+                                        <form method="post" action="{{ url_for('cancel_booking', booking_id=booking.id) }}">
+                                            <button type="submit" class="btn btn-danger">Cancel Booking</button>
+                                        </form>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
